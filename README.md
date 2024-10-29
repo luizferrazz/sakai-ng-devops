@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Este é um projeto Next.js inicializado com create-next-app.
 
-## Getting Started
+Começando Sakai é um template de aplicação para Next.js baseado no popular framework Next.js com o novo App Router.
 
-Sakai is an application template for Next.js based on the popular Next.js framework with new App Router. 
+Primeiro, execute o servidor de desenvolvimento:
 
-First, run the development server:
-
-```bash
+```
 npm run dev
-# or
+
+ou
 yarn dev
-# or
-pnpm dev
+
+ou
+pnpm dev Abra http://localhost:3000 no seu navegador para ver o resultado.
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Integração com Aplicações Next.js Existentes Apenas as pastas relacionadas ao layout precisam ser movidas para o seu projeto. A integração das páginas envolve mover os arquivos dessas pastas. Certifique-se de que a página que está sendo usada esteja definida sob o layout do grupo relacionado.
 
-## Integration with Existing Next.js Applications
+Saiba Mais Para aprender mais sobre o Next.js, veja os seguintes recursos:
 
-Only the folders related to the layout need to be moved into your project. Integration of pages involves moving the files under those folders. Make sure that the using page is defined under the related group layout.
+Documentação do Next.js - aprenda sobre as funcionalidades e API do Next.js. Aprenda Next.js - um tutorial interativo do Next.js. Você pode verificar o repositório do Next.js no GitHub - seus feedbacks e contribuições são bem-vindos!
 
-## Learn More
+Implantação no Vercel A maneira mais fácil de implantar seu aplicativo Next.js é usar a Plataforma Vercel dos criadores do Next.js.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Confira nossa documentação de implantação do Next.js para mais detalhes.
