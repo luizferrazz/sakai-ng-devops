@@ -1,33 +1,26 @@
 # Changelog
 
-## 10.0.0
+## 3.8.0 (2023-07-24)
 
--   Upgrade to Next 13.4.8
--   Migrate to Next App Roter
--   Migrate to PrimeReactContext
--   Update to PrimeReact 9.6.2
--   Update other dependencies
+**Migration Guide**
 
-## 9.1.2
+-   Update theme files.
+-   Update assets style files
+-   Remove code highlight
 
-- Refactored project files
+**Implemented New Features and Enhancements**
 
-## 9.1.1
+-   Upgrade to PrimeVue 3.30.2
 
-- Fixed hydration warnings
+## 3.7.0 (2023-05-06)
 
-## 9.1.0
+-   Upgrade to PrimeVue 3.28.0
 
-- Add typescript support
+**Implemented New Features and Enhancements**
 
-## 9.0.0
+## 3.6.0 (2023-04-12)
 
-- Upgrade PrimeReact to v9
-- Upgrade to PrimeReact 9.2.2
-- Upgrade to PrimeFlex 3.3.0
-- Upgrade to Next 13.2.3
-- Update other dependencies
+**Implemented New Features and Enhancements**
 
-## 8.1.0
-
--   Migrate CRA to NextJS
+-   Upgrade to PrimeVue 3.26.1
+-   Upgrade to vite 4.2.1
