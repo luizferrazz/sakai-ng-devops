@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/demo/api/product';
+import { Pizzaria } from '../../../../demo/api/pizzaria.model';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { ProductService } from 'src/app/demo/service/product.service';
+import { PizzariaService } from '../../../../demo/service/pizzaria.service';
 
 @Component({
     templateUrl: './crud.component.html',
@@ -10,17 +10,17 @@ import { ProductService } from 'src/app/demo/service/product.service';
 })
 export class CrudComponent implements OnInit {
 
-    productDialog: boolean = false;
+    pizzariaDialog: boolean = false;
 
-    deleteProductDialog: boolean = false;
+    deletePizzariaDialog: boolean = false;
 
-    deleteProductsDialog: boolean = false;
+    deletePizzariasDialog: boolean = false;
 
-    products: Product[] = [];
+    pizzarias: Pizzaria[] = [];
 
-    product: Product = {};
+    pizzaria: Pizzaria = {};
 
-    selectedProducts: Product[] = [];
+    selectedPizzarias: Pizzaria[] = [];
 
     submitted: boolean = false;
 
@@ -30,13 +30,13 @@ export class CrudComponent implements OnInit {
 
     rowsPerPageOptions = [5, 10, 20];
 
-    constructor(private productService: ProductService, private messageService: MessageService) { }
+    constructor(private pizzariaService: PizzariaService, private messageService: MessageService) { }
 
     ngOnInit() {
-        this.productService.getProducts().then(data => this.products = data);
+        this.pizzariaService.getPizzarias().subscribe(data => this.pizzarias = data);
 
         this.cols = [
-            { field: 'product', header: 'Product' },
+            { field: 'product', header: 'Pizzaria' },
             { field: 'price', header: 'Price' },
             { field: 'category', header: 'Category' },
             { field: 'rating', header: 'Reviews' },
@@ -51,73 +51,74 @@ export class CrudComponent implements OnInit {
     }
 
     openNew() {
-        this.product = {};
+        this.pizzaria = {};
         this.submitted = false;
-        this.productDialog = true;
+        this.pizzariaDialog = true;
     }
 
-    deleteSelectedProducts() {
-        this.deleteProductsDialog = true;
+    deleteSelectedPizzarias() {
+        this.deletePizzariasDialog = true;
     }
 
-    editProduct(product: Product) {
-        this.product = { ...product };
-        this.productDialog = true;
+    editPizzaria(pizzaria: Pizzaria) {
+        this.pizzaria = { ...pizzaria };
+        this.pizzariaDialog = true;
     }
 
-    deleteProduct(product: Product) {
-        this.deleteProductDialog = true;
-        this.product = { ...product };
+    deletePizzaria(pizzaria: Pizzaria) {
+        this.deletePizzariaDialog = true;
+        this.pizzaria = { ...pizzaria };
     }
 
     confirmDeleteSelected() {
-        this.deleteProductsDialog = false;
-        this.products = this.products.filter(val => !this.selectedProducts.includes(val));
+        this.deletePizzariasDialog = false;
+        /* this.pizzarias = this.pizzarias.filter(val => !this.selectedPizzarias.includes(val)); */
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-        this.selectedProducts = [];
+        this.selectedPizzarias = [];
     }
 
     confirmDelete() {
-        this.deleteProductDialog = false;
-        this.products = this.products.filter(val => val.id !== this.product.id);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-        this.product = {};
+        this.deletePizzariaDialog = false;
+        /* this.pizzarias = this.pizzarias.filter(val => val.id !== this.pizzaria.id); */
+        this.pizzariaService.deletePizzaria(this.pizzaria.key);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Pizzaria Deleted', life: 3000 });
+        this.pizzaria = {};
     }
 
     hideDialog() {
-        this.productDialog = false;
+        this.pizzariaDialog = false;
         this.submitted = false;
     }
 
-    saveProduct() {
+    savePizzaria() {
         this.submitted = true;
 
-        if (this.product.name?.trim()) {
-            if (this.product.id) {
+        if (this.pizzaria.name?.trim()) {
+            if (this.pizzaria.id) {
                 // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-                this.products[this.findIndexById(this.product.id)] = this.product;
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+                this.pizzaria.inventoryStatus = this.pizzaria.inventoryStatus.value ? this.pizzaria.inventoryStatus.value : this.pizzaria.inventoryStatus;
+                /* this.pizzarias[this.findIndexById(this.pizzaria.id)] = this.pizzaria; */
+                this.pizzariaService.updatePizzaria(this.pizzaria.key, this.pizzaria);
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Pizzaria Updated', life: 3000 });
             } else {
-                this.product.id = this.createId();
-                this.product.code = this.createId();
-                this.product.image = 'product-placeholder.svg';
+                this.pizzaria.id = this.createId();
+                this.pizzariaService.createPizzaria(this.pizzaria);
                 // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-                this.products.push(this.product);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+                this.pizzaria.inventoryStatus = this.pizzaria.inventoryStatus ? this.pizzaria.inventoryStatus.value : 'INSTOCK';
+                /* this.pizzarias.push(this.pizzaria); */
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Pizzaria Created', life: 3000 });
             }
 
-            this.products = [...this.products];
-            this.productDialog = false;
-            this.product = {};
+            this.pizzarias = [...this.pizzarias];
+            this.pizzariaDialog = false;
+            this.pizzaria = {};
         }
     }
 
     findIndexById(id: string): number {
         let index = -1;
-        for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].id === id) {
+        for (let i = 0; i < this.pizzarias.length; i++) {
+            if (this.pizzarias[i].id === id) {
                 index = i;
                 break;
             }
