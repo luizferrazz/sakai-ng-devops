@@ -148,7 +148,7 @@
         <p-dialog [(visible)]="deletePizzariaDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="[pizzaria]">Are you sure you want to delete <b>{{pizzaria.name}}</b>?</span>
+                <span *ngIf="[pizzaria]">Deseja deletar a pizzaria <b>{{pizzaria.name}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletePizzariaDialog = false"></button>
