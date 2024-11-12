@@ -3,6 +3,7 @@ import { Fornecedor } from '../../../../demo/api/fornecedor.model';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { FornecedorService } from '../../../../demo/service/fornecedor.service';
+import { CepService } from '../../../../demo/service/cep.service';
 
 @Component({
     templateUrl: './fornecedor.component.html',
@@ -28,7 +29,11 @@ export class FornecedorComponent implements OnInit {
 
     rowsPerPageOptions = [5, 10, 20];
 
-    constructor(private fornecedorService: FornecedorService, private messageService: MessageService) { }
+    ufs: any[] = [];
+
+    municipios: any[] = [];
+
+    constructor(private fornecedorService: FornecedorService, private messageService: MessageService, private cepService: CepService) { }
 
     ngOnInit() {
         this.fornecedorService.getFornecedores().subscribe(data => this.fornecedores = data);
@@ -39,6 +44,31 @@ export class FornecedorComponent implements OnInit {
             { field: 'telefone', header: 'Telefone' },
             { field: 'endereco', header: 'Endereço' }
         ];
+
+        this.cepService.buscarEstado().subscribe((ufs: any) => {
+            this.ufs = ufs;
+        });
+    }
+
+    getCep(cep: any) {
+        this.cepService.buscar(cep).subscribe((cep: any) => {
+            this.fornecedor.endereco.rua = cep.logradouro;
+            this.fornecedor.endereco.bairro = cep.bairro;
+            this.fornecedor.endereco.cep = cep.cep;
+            const estado = this.ufs.find((uf: any) => uf.sigla === cep.uf);
+            this.fornecedor.endereco.estado = estado;
+            this.getMunicipios(estado.id);
+            setTimeout(() => {
+                const municipio = this.municipios.find((cidade: { nome: string }) => cidade.nome === cep.localidade);
+                this.fornecedor.endereco.cidade = municipio;
+            }, 500);
+        });
+    }
+
+    getMunicipios(code: String) {
+        this.cepService.buscarCidade(code).subscribe((municipios: any) => {
+            this.municipios = municipios;
+        });
     }
 
     openNovo() {

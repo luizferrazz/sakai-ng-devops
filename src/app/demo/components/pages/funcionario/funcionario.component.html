@@ -74,58 +74,58 @@
             </p-table>
         </div>
 
-          <p-dialog [(visible)]="funcionarioDialog" [style]="{width: '450px'}" header="Detalhes do Funcionário" [modal]="true" class="p-fluid">
-        <ng-template pTemplate="content">
-            <div class="field" style="margin-bottom: 1rem;">
-                <label for="name">Nome</label>
-                <input type="text" pInputText id="name" [(ngModel)]="funcionario.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.name}"/>
-                <small class="ng-dirty ng-invalid" *ngIf="submitted && !funcionario.name">Nome é obrigatório.</small>
-            </div>
-            
-            <div class="field" style="margin-bottom: 1rem;">
-                <label for="email">E-mail</label>
-                <input type="text" pInputText id="email" [(ngModel)]="funcionario.email" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.email}"/>
-                <small class="ng-dirty ng-invalid" *ngIf="submitted && !funcionario.email">E-mail é obrigatório.</small>
-            </div>
-            
-            <div class="field" style="margin-bottom: 1rem;">
-                <label for="telefone">Telefone</label>
-                <input type="text" pInputText id="telefone" [(ngModel)]="funcionario.telefone" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.telefone}"/>
-                <small class="ng-dirty ng-invalid" *ngIf="submitted && !funcionario.telefone">Telefone é obrigatório.</small>
-            </div>
-            
-            <div class="field" style="margin-bottom: 1rem;">
-                <label for="cargo">Cargo</label>
-                <input type="text" pInputText id="cargo" [(ngModel)]="funcionario.cargo" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.cargo}"/>
-                <small class="ng-dirty ng-invalid" *ngIf="submitted && !funcionario.cargo">Cargo é obrigatório.</small>
-            </div>
-            
-            <div class="field" style="margin-bottom: 1rem;">
-                <label for="salario">Salário</label>
-                <p-inputNumber id="salario" [(ngModel)]="funcionario.salario" mode="currency" currency="BRL" locale="pt-BR"></p-inputNumber>
-            </div>
-            
-            <div class="field" style="margin-bottom: 1rem;">
-                <label for="endereco">Endereço</label>
-                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                    <input type="text" pInputText id="rua" [(ngModel)]="funcionario.endereco.rua" placeholder="Rua" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.rua}" style="flex: 1 1 100%;" />
-                    <input type="text" pInputText id="numero" [(ngModel)]="funcionario.endereco.numero" placeholder="Número" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.numero}" style="flex: 1 1 100%;" />
-                    <input type="text" pInputText id="complemento" [(ngModel)]="funcionario.endereco.complemento" placeholder="Complemento" style="flex: 1 1 100%;" />
-                    <input type="text" pInputText id="bairro" [(ngModel)]="funcionario.endereco.bairro" placeholder="Bairro" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.bairro}" style="flex: 1 1 100%;" />
-                    <input type="text" pInputText id="cidade" [(ngModel)]="funcionario.endereco.cidade" placeholder="Cidade" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.cidade}" style="flex: 1 1 100%;" />
-                    <input type="text" pInputText id="estado" [(ngModel)]="funcionario.endereco.estado" placeholder="Estado" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.estado}" style="flex: 1 1 100%;" />
-                    <input type="text" pInputText id="cep" [(ngModel)]="funcionario.endereco.cep" placeholder="CEP" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.cep}" style="flex: 1 1 100%;" />
+        <p-dialog [(visible)]="funcionarioDialog" [style]="{width: '450px'}" header="Detalhes do Funcionário" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field" style="margin-bottom: 1rem;">
+                    <label for="name">Nome</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="funcionario.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.name}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !funcionario.name">Nome é obrigatório.</small>
                 </div>
-            </div>
-        </ng-template>
-    
-        <ng-template pTemplate="footer">
-            <div class="p-d-flex p-jc-end">
-                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="saveFuncionario()"></button>
-            </div>
-        </ng-template>
-    </p-dialog>
+                
+                <div class="field" style="margin-bottom: 1rem;">
+                    <label for="email">E-mail</label>
+                    <input type="text" pInputText id="email" [(ngModel)]="funcionario.email" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.email}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !funcionario.email">E-mail é obrigatório.</small>
+                </div>
+                
+                <div class="field" style="margin-bottom: 1rem;">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" pInputText id="telefone" [(ngModel)]="funcionario.telefone" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.telefone}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !funcionario.telefone">Telefone é obrigatório.</small>
+                </div>
+                
+                <div class="field" style="margin-bottom: 1rem;">
+                    <label for="cargo">Cargo</label>
+                    <input type="text" pInputText id="cargo" [(ngModel)]="funcionario.cargo" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.cargo}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !funcionario.cargo">Cargo é obrigatório.</small>
+                </div>
+                
+                <div class="field" style="margin-bottom: 1rem;">
+                    <label for="salario">Salário</label>
+                    <p-inputNumber id="salario" [(ngModel)]="funcionario.salario" mode="currency" currency="BRL" locale="pt-BR"></p-inputNumber>
+                </div>
+                
+                <div class="field" style="margin-bottom: 1rem;">
+                    <label for="endereco">Endereço</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <input type="text" pInputText id="rua" [(ngModel)]="funcionario.endereco.rua" placeholder="Rua" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.rua}" style="flex: 1 1 100%;" />
+                        <input type="text" pInputText id="numero" [(ngModel)]="funcionario.endereco.numero" placeholder="Número" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.numero}" style="flex: 1 1 100%;" />
+                        <input type="text" pInputText id="complemento" [(ngModel)]="funcionario.endereco.complemento" placeholder="Complemento" style="flex: 1 1 100%;" />
+                        <input type="text" pInputText id="bairro" [(ngModel)]="funcionario.endereco.bairro" placeholder="Bairro" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.bairro}" style="flex: 1 1 100%;" />
+                        <p-dropdown [options]="ufs" [(ngModel)]="funcionario.endereco.estado" optionLabel="nome" placeholder="Estado" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.estado}" (onChange)="getMunicipios($event.value.id)" style="flex: 1 1 100%;"></p-dropdown>
+                        <p-dropdown [options]="municipios" [(ngModel)]="funcionario.endereco.cidade" optionLabel="nome" placeholder="Cidade" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.cidade}" style="flex: 1 1 100%;"></p-dropdown>
+                        <input type="text" pInputText id="cep" [(ngModel)]="funcionario.endereco.cep" placeholder="CEP" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.cep}" (blur)="getCep(funcionario.endereco.cep)" style="flex: 1 1 100%;"/>
+                    </div>
+                </div>
+            </ng-template>
+        
+            <ng-template pTemplate="footer">
+                <div class="p-d-flex p-jc-end">
+                    <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                    <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="saveFuncionario()"></button>
+                </div>
+            </ng-template>
+        </p-dialog>
 
         <p-dialog [(visible)]="deleteFuncionarioDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">

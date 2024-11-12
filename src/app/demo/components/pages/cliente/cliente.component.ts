@@ -3,6 +3,7 @@ import { Cliente } from '../../../../demo/api/cliente.model';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ClienteService } from '../../../../demo/service/cliente.service';
+import { CepService } from '../../../../demo/service/cep.service';
 
 @Component({
     templateUrl: './cliente.component.html',
@@ -28,7 +29,12 @@ export class ClienteComponent implements OnInit {
 
     rowsPerPageOptions = [5, 10, 20];
 
-    constructor(private clienteService: ClienteService, private messageService: MessageService) { }
+    ufs: any[] = [];
+
+    municipios: any[] = [];
+
+
+    constructor(private clienteService: ClienteService, private messageService: MessageService, private cepService: CepService) { }
 
     ngOnInit() {
         this.clienteService.getClientes().subscribe(data => this.clientes = data);
@@ -39,6 +45,31 @@ export class ClienteComponent implements OnInit {
             { field: 'telefone', header: 'Telefone' },
             { field: 'endereco', header: 'Endereço' }
         ];
+
+        this.cepService.buscarEstado().subscribe((ufs: any) => {
+            this.ufs = ufs;
+        });
+    }
+
+    getCep(cep: any) {
+        this.cepService.buscar(cep).subscribe((cep: any) => {
+            this.cliente.endereco.rua = cep.logradouro;
+            this.cliente.endereco.bairro = cep.bairro;
+            this.cliente.endereco.cep = cep.cep;
+            const estado = this.ufs.find((uf: any) => uf.sigla === cep.uf);
+            this.cliente.endereco.estado = estado;
+            this.getMunicipios(estado.id);
+            setTimeout(() => {
+                const municipio = this.municipios.find((cidade: { nome: string }) => cidade.nome === cep.localidade);
+                this.cliente.endereco.cidade = municipio;
+            }, 500);
+        });
+    }
+
+    getMunicipios(code: String) {
+        this.cepService.buscarCidade(code).subscribe((municipios: any) => {
+            this.municipios = municipios;
+        });
     }
 
     openNovo() {

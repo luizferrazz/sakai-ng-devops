@@ -113,9 +113,9 @@
                         <input type="text" pInputText id="numero" [(ngModel)]="fornecedor.endereco.numero" placeholder="Número" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !fornecedor.endereco?.numero}" style="flex: 1 1 100%;" />
                         <input type="text" pInputText id="complemento" [(ngModel)]="fornecedor.endereco.complemento" placeholder="Complemento" style="flex: 1 1 100%;" />
                         <input type="text" pInputText id="bairro" [(ngModel)]="fornecedor.endereco.bairro" placeholder="Bairro" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !fornecedor.endereco?.bairro}" style="flex: 1 1 100%;" />
-                        <input type="text" pInputText id="cidade" [(ngModel)]="fornecedor.endereco.cidade" placeholder="Cidade" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !fornecedor.endereco?.cidade}" style="flex: 1 1 100%;" />
-                        <input type="text" pInputText id="estado" [(ngModel)]="fornecedor.endereco.estado" placeholder="Estado" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !fornecedor.endereco?.estado}" style="flex: 1 1 100%;" />
-                        <input type="text" pInputText id="cep" [(ngModel)]="fornecedor.endereco.cep" placeholder="CEP" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !fornecedor.endereco?.cep}" style="flex: 1 1 100%;" />
+                        <p-dropdown [options]="ufs" [(ngModel)]="fornecedor.endereco.estado" optionLabel="nome" placeholder="Estado" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !fornecedor.endereco?.estado}" (onChange)="getMunicipios($event.value.id)" style="flex: 1 1 100%;"></p-dropdown>
+                        <p-dropdown [options]="municipios" [(ngModel)]="fornecedor.endereco.cidade" optionLabel="nome" placeholder="Cidade" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !fornecedor.endereco?.cidade}" style="flex: 1 1 100%;"></p-dropdown>
+                        <input type="text" pInputText id="cep" [(ngModel)]="fornecedor.endereco.cep" placeholder="CEP" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !fornecedor.endereco?.cep}" (blur)="getCep(fornecedor.endereco.cep)" style="flex: 1 1 100%;"/>
                     </div>
                 </div>
             </ng-template>
