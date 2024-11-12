@@ -1,0 +1,152 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNovo()"></button>
+                        <button pButton pRipple label="Excluir" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedFuncionarios()" [disabled]="!selectedFuncionarios || !selectedFuncionarios.length"></button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="funcionarios" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','email','telefone','cargo','salario']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" [(selection)]="selectedFuncionarios" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Gerenciar Funcionários</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="code">Código <p-sortIcon field="code"></p-sortIcon></th>
+                        <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+                        <th pSortableColumn="telefone">Telefone <p-sortIcon field="telefone"></p-sortIcon></th>
+                        <th pSortableColumn="cargo">Cargo <p-sortIcon field="cargo"></p-sortIcon></th>
+                        <th pSortableColumn="salario">Salário <p-sortIcon field="salario"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-funcionario>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="funcionario"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Código</span>
+                            {{funcionario.code || funcionario.id}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Nome</span>
+                            {{funcionario.name}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Email</span>
+                            {{funcionario.email}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Telefone</span>
+                            {{funcionario.telefone}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Cargo</span>
+                            {{funcionario.cargo}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Salário</span>
+                            {{funcionario.salario | currency:'BRL'}}
+                        </td>
+                        <td>
+                            <div class="flex" style="justify-content: flex-end;">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editFuncionario(funcionario)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteFuncionario(funcionario)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+          <p-dialog [(visible)]="funcionarioDialog" [style]="{width: '450px'}" header="Detalhes do Funcionário" [modal]="true" class="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="name">Nome</label>
+                <input type="text" pInputText id="name" [(ngModel)]="funcionario.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.name}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !funcionario.name">Nome é obrigatório.</small>
+            </div>
+            
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="email">E-mail</label>
+                <input type="text" pInputText id="email" [(ngModel)]="funcionario.email" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.email}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !funcionario.email">E-mail é obrigatório.</small>
+            </div>
+            
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="telefone">Telefone</label>
+                <input type="text" pInputText id="telefone" [(ngModel)]="funcionario.telefone" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.telefone}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !funcionario.telefone">Telefone é obrigatório.</small>
+            </div>
+            
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="cargo">Cargo</label>
+                <input type="text" pInputText id="cargo" [(ngModel)]="funcionario.cargo" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.cargo}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !funcionario.cargo">Cargo é obrigatório.</small>
+            </div>
+            
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="salario">Salário</label>
+                <p-inputNumber id="salario" [(ngModel)]="funcionario.salario" mode="currency" currency="BRL" locale="pt-BR"></p-inputNumber>
+            </div>
+            
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="endereco">Endereço</label>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <input type="text" pInputText id="rua" [(ngModel)]="funcionario.endereco.rua" placeholder="Rua" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.rua}" style="flex: 1 1 100%;" />
+                    <input type="text" pInputText id="numero" [(ngModel)]="funcionario.endereco.numero" placeholder="Número" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.numero}" style="flex: 1 1 100%;" />
+                    <input type="text" pInputText id="complemento" [(ngModel)]="funcionario.endereco.complemento" placeholder="Complemento" style="flex: 1 1 100%;" />
+                    <input type="text" pInputText id="bairro" [(ngModel)]="funcionario.endereco.bairro" placeholder="Bairro" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.bairro}" style="flex: 1 1 100%;" />
+                    <input type="text" pInputText id="cidade" [(ngModel)]="funcionario.endereco.cidade" placeholder="Cidade" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.cidade}" style="flex: 1 1 100%;" />
+                    <input type="text" pInputText id="estado" [(ngModel)]="funcionario.endereco.estado" placeholder="Estado" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.estado}" style="flex: 1 1 100%;" />
+                    <input type="text" pInputText id="cep" [(ngModel)]="funcionario.endereco.cep" placeholder="CEP" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !funcionario.endereco?.cep}" style="flex: 1 1 100%;" />
+                </div>
+            </div>
+        </ng-template>
+    
+        <ng-template pTemplate="footer">
+            <div class="p-d-flex p-jc-end">
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="saveFuncionario()"></button>
+            </div>
+        </ng-template>
+    </p-dialog>
+
+        <p-dialog [(visible)]="deleteFuncionarioDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="funcionario">Deseja deletar o funcionário <b>{{funcionario.name}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteFuncionarioDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteFuncionariosDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Você quer deletar todos os funcionários selecionados?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteFuncionariosDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>

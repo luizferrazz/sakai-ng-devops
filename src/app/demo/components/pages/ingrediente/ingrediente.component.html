@@ -1,0 +1,149 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNovo()"></button>
+                        <button pButton pRipple label="Excluir" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedIngredientes()" [disabled]="!selectedIngredientes || !selectedIngredientes.length"></button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="ingredientes" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','description','quantity','unit','supplier','price','expirationDate','storageLocation']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" [(selection)]="selectedIngredientes" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Gerenciar Ingredientes</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="description">Descrição <p-sortIcon field="description"></p-sortIcon></th>
+                        <th pSortableColumn="quantity">Quantidade <p-sortIcon field="quantity"></p-sortIcon></th>
+                        <th pSortableColumn="unit">Unidade <p-sortIcon field="unit"></p-sortIcon></th>
+                        <th pSortableColumn="supplier">Fornecedor <p-sortIcon field="supplier"></p-sortIcon></th>
+                        <th pSortableColumn="price">Preço <p-sortIcon field="price"></p-sortIcon></th>
+                        <th pSortableColumn="expirationDate">Data de Validade <p-sortIcon field="expirationDate"></p-sortIcon></th>
+                        <th pSortableColumn="storageLocation">Local de Armazenamento <p-sortIcon field="storageLocation"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-ingrediente>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="ingrediente"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Nome</span>
+                            {{ingrediente.name}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Descrição</span>
+                            {{ingrediente.description}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Quantidade</span>
+                            {{ingrediente.quantity}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Unidade</span>
+                            {{ingrediente.unit}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Fornecedor</span>
+                            {{ingrediente.supplier?.name}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Preço</span>
+                            {{ingrediente.price | currency:'BRL'}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Data de Validade</span>
+                            {{ingrediente.expirationDate | date:'dd/MM/yyyy'}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Local de Armazenamento</span>
+                            {{ingrediente.storageLocation}}
+                        </td>
+                        <td>
+                            <div class="flex" style="justify-content: flex-end;">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editIngrediente(ingrediente)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteIngrediente(ingrediente)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="ingredienteDialog" [style]="{width: '450px'}" header="Detalhes do Ingrediente" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="name">Nome</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="ingrediente.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !ingrediente.name}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !ingrediente.name">Nome é obrigatório.</small>
+                </div>
+                <div class="field">
+                    <label for="description">Descrição</label>
+                    <textarea id="description" pInputTextarea [(ngModel)]="ingrediente.description" required rows="3" cols="20"></textarea>
+                </div>
+                <div class="field">
+                    <label for="quantity">Quantidade</label>
+                    <p-inputNumber id="quantity" [(ngModel)]="ingrediente.quantity"></p-inputNumber>
+                </div>
+                <div class="field">
+                    <label for="unit">Unidade</label>
+                    <input type="text" pInputText id="unit" [(ngModel)]="ingrediente.unit" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !ingrediente.unit}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !ingrediente.unit">Unidade é obrigatória.</small>
+                </div>
+                <div class="field">
+                    <label for="supplier">Fornecedor</label>
+                    <p-dropdown [options]="fornecedores" [(ngModel)]="ingrediente.supplier" optionLabel="name" placeholder="Selecione um Fornecedor"></p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="price">Preço</label>
+                    <p-inputNumber id="price" [(ngModel)]="ingrediente.price" mode="currency" currency="BRL" locale="pt-BR"></p-inputNumber>
+                </div>
+                <div class="field">
+                    <label for="expirationDate">Data de Validade</label>
+                    <p-calendar id="expirationDate" [(ngModel)]="ingrediente.expirationDate" dateFormat="dd/mm/yy"></p-calendar>
+                </div>
+                <div class="field">
+                    <label for="storageLocation">Local de Armazenamento</label>
+                    <input type="text" pInputText id="storageLocation" [(ngModel)]="ingrediente.storageLocation" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !ingrediente.storageLocation}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !ingrediente.storageLocation">Local de Armazenamento é obrigatório.</small>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <div class="p-d-flex p-jc-end">
+                    <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                    <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="saveIngrediente()"></button>
+                </div>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteIngredienteDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="ingrediente">Deseja deletar o ingrediente <b>{{ingrediente.name}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteIngredienteDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteIngredientesDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Você quer deletar todos os ingredientes selecionados?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteIngredientesDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
