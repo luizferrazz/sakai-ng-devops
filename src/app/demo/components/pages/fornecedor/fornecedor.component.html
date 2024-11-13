@@ -63,6 +63,10 @@
                             <span class="p-column-title">Razão Social</span>
                             {{fornecedor.razaoSocial}}
                         </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Endereço</span>
+                            {{fornecedor.endereco?.rua}}, {{fornecedor.endereco?.numero}}, {{fornecedor.endereco?.complemento}}, {{fornecedor.endereco?.bairro}}, {{fornecedor.endereco?.cidade?.nome}}, {{fornecedor.endereco?.estado?.nome}}, {{fornecedor.endereco?.cep}}
+                        </td>
                         <td>
                             <div class="flex" style="justify-content: flex-end;">
                                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editFornecedor(fornecedor)"></button>
@@ -142,7 +146,7 @@
         <p-dialog [(visible)]="deleteFornecedoresDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Você quer deletar todos os fornecedores?</span>
+                <span>Você quer deletar todos os fornecedores selecionados?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteFornecedoresDialog = false"></button>

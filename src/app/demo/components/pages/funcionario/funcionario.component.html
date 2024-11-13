@@ -63,6 +63,10 @@
                             <span class="p-column-title">Salário</span>
                             {{funcionario.salario | currency:'BRL'}}
                         </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Endereço</span>
+                            {{funcionario.endereco?.rua}}, {{funcionario.endereco?.numero}}, {{funcionario.endereco?.complemento}}, {{funcionario.endereco?.bairro}}, {{funcionario.endereco?.cidade?.nome}}, {{funcionario.endereco?.estado?.nome}}, {{funcionario.endereco?.cep}}
+                        </td>
                         <td>
                             <div class="flex" style="justify-content: flex-end;">
                                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editFuncionario(funcionario)"></button>
