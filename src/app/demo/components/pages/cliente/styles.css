@@ -1,0 +1,63 @@
+/* Ajustes de responsividade */
+@media (max-width: 768px) {
+    .card {
+        padding: 1rem !important;
+    }
+
+    .p-toolbar {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+
+    .p-toolbar .my-2 {
+        margin-bottom: 1rem !important;
+    }
+
+    .p-table {
+        font-size: 0.9rem !important;
+    }
+
+    .p-dialog {
+        width: 90% !important;
+    }
+
+    .p-dialog .p-fluid .field {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .p-dialog .p-fluid .field label {
+        font-size: 1rem !important;
+    }
+
+    .p-dialog .p-fluid .field input,
+    .p-dialog .p-fluid .field p-dropdown {
+        font-size: 1rem !important;
+    }
+}
+
+/* Ajustes gerais de margens e padding */
+.card {
+    margin: 1rem !important;
+    padding: 2rem !important;
+}
+
+.p-toolbar {
+    margin-bottom: 1rem !important;
+}
+
+.p-table {
+    margin-bottom: 1rem !important;
+}
+
+.p-dialog .p-fluid .field {
+    margin-bottom: 1rem !important;
+}
+
+.p-dialog .p-fluid .field label {
+    font-size: 1.1rem !important;
+}
+
+.p-dialog .p-fluid .field input,
+.p-dialog .p-fluid .field p-dropdown {
+    font-size: 1.1rem !important;
+}

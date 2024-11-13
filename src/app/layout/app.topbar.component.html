@@ -1,7 +1,7 @@
 <div class="layout-topbar">
     <a class="layout-topbar-logo" routerLink="">
-        <img src="assets/layout/images/{{layoutService.config.colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg" alt="logo">
-        <span>PIZZARIA ICARA ESADA</span>
+        <img src="assets/layout/images/{{layoutService.config.colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg" alt="logo" style="height: 7vh;">
+        <span> <img src="assets/layout/images/{{layoutService.config.colorScheme === 'light' ? 'logo-texto' : 'logo-texto1'}}.svg" alt="logo" style="height: 6vh;"></span>
     </a>
 
     <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
