@@ -17,7 +17,7 @@
                         <h5 class="m-0">Gerenciar Clientes</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." class="w-full sm:w-auto"/>
                         </span>
                     </div>
                 </ng-template>
@@ -93,13 +93,14 @@
                 <div class="field" style="margin-bottom: 1rem;">
                     <label for="endereco">Endereço</label>
                     <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <input type="text" pInputText id="cep" [(ngModel)]="cliente.endereco.cep" placeholder="CEP" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !cliente.endereco?.cep}" (blur)="getCep(cliente.endereco.cep)" style="flex: 1 1 100%;"/>
+                        <p-dropdown [options]="ufs" [(ngModel)]="cliente.endereco.estado" optionLabel="nome" placeholder="Estado" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !cliente.endereco?.estado}" (onChange)="getMunicipios($event.value.id)" style="flex: 1 1 100%;"></p-dropdown>
+                        <p-dropdown [options]="municipios" [(ngModel)]="cliente.endereco.cidade" optionLabel="nome" placeholder="Cidade" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !cliente.endereco?.cidade}" style="flex: 1 1 100%;"></p-dropdown>
                         <input type="text" pInputText id="rua" [(ngModel)]="cliente.endereco.rua" placeholder="Rua" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !cliente.endereco?.rua}" style="flex: 1 1 100%;" />
                         <input type="text" pInputText id="numero" [(ngModel)]="cliente.endereco.numero" placeholder="Número" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !cliente.endereco?.numero}" style="flex: 1 1 100%;" />
                         <input type="text" pInputText id="complemento" [(ngModel)]="cliente.endereco.complemento" placeholder="Complemento" style="flex: 1 1 100%;" />
                         <input type="text" pInputText id="bairro" [(ngModel)]="cliente.endereco.bairro" placeholder="Bairro" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !cliente.endereco?.bairro}" style="flex: 1 1 100%;" />
-                        <p-dropdown [options]="ufs" [(ngModel)]="cliente.endereco.estado" optionLabel="nome" placeholder="Estado" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !cliente.endereco?.estado}" (onChange)="getMunicipios($event.value.id)" style="flex: 1 1 100%;"></p-dropdown>
-                        <p-dropdown [options]="municipios" [(ngModel)]="cliente.endereco.cidade" optionLabel="nome" placeholder="Cidade" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !cliente.endereco?.cidade}" style="flex: 1 1 100%;"></p-dropdown>
-                        <input type="text" pInputText id="cep" [(ngModel)]="cliente.endereco.cep" placeholder="CEP" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !cliente.endereco?.cep}" (blur)="getCep(cliente.endereco.cep)" style="flex: 1 1 100%;"/>
+                        
                     </div>
                 </div>
             </ng-template>
